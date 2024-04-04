@@ -1,7 +1,12 @@
 import Link from "next/link";
 import styles from "./navbar.module.css";
 import Image from "next/image";
+import ThemeToggle from "../themeToggle/ThemeToggle";
 
+/**
+ * 
+ * @returns 
+ */
 const Navbar = () => {
     return (
         <div className={styles.container}>
@@ -13,6 +18,7 @@ const Navbar = () => {
             </div>
             <div className={styles.logo}>Blog of the worlds</div>
             <div className={styles.links}>
+                <ThemeToggle />
                 <Link href="/">Homepage</Link>
                 <Link href="/contact">Contact</Link>
                 <Link href="/about">About</Link>
