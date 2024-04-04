@@ -9,12 +9,10 @@ import { ThemeContext } from "@/context/ThemeContext";
  * 
  */
 export default function ThemeToggle() {
-    const { theme } = useContext(ThemeContext);
-    
-    console.log(`Theme: ${theme}`);
+    const { toggle, theme } = useContext(ThemeContext);
     
     return (
-        <div className={styles.container}>
+        <div className={styles.container} onClick={toggle}>
             <Image src="/moon.png" alt="" width={14} height={14}/>
             <Image src="/sun.png" alt="" width={14} height={14}/>
         </div>
