@@ -9,7 +9,8 @@ import { useState } from "react";
  * @returns 
  */
 export default async function AuthLinks() {
-    const status = "notauthenticated";
+    // const status = "notauthenticated";
+    const status = "authenticated";
     const [open, setOpen] = useState(false);
     
     return (
