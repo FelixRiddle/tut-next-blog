@@ -4,32 +4,41 @@ import Image from "next/image";
 import styles from "./singlePage.module.css";
 import Menu from "@/components/Menu/Menu";
 import Comments from "@/components/comments/Comments";
+import getPost from "@/lib/api/getPost";
 
 /**
  * Single page
  */
-export default function SinglePage() {
+export default async function SinglePage({ params }) {
+    const { slug } = params;
+    
+    const post = await getPost(slug);
+    
     return (
         <div className={styles.container}>
             {/* Blog information */}
             <div className={styles.infoContainer}>
                 <div className={styles.textContainer}>
-                    <h1 className={styles.title}>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minus, unde!</h1>
+                    <h1 className={styles.title}>
+                        {post.title}
+                    </h1>
                     <div className={styles.user}>
-                        <div className={styles.userImageContainer}>
-                            <Image src="/p1.png" alt="" fill className={styles.image} />
-                        </div>
+                        {post.user.img && (
+                            <div className={styles.userImageContainer}>
+                                <Image src={post.user.img} alt="" fill className={styles.image} />
+                            </div>
+                        )}
                         
                         <div className={styles.userTextContainer}>
-                            <span className={styles.username}>John Doe</span>
-                            <span className={styles.date}>2024.04.09</span>
+                            <span className={styles.username}>{post.user.name}</span>
+                            <span className={styles.date}>{post.createdAt.substring(0, 10)}</span>
                         </div>
                     </div>
                 </div>
                 
-                <div className={styles.imageContainer}>
-                    <Image src="" alt="" fill className={styles.image} />
-                </div>
+                {post?.img && <div className={styles.imageContainer}>
+                    <Image src={post.img} alt="" fill className={styles.image} />
+                </div>}
             </div>
             
             {/* Blog */}
@@ -37,36 +46,13 @@ export default function SinglePage() {
                 <div className={styles.post}>
                     
                     {/* Blog description */}
-                    <div className={styles.description}>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore laborum
-                            molestiae architecto sequi porro dicta nulla enim! Dignissimos voluptas
-                            at eligendi deleniti alias iste iusto ratione molestiae earum nihil, debitis
-                            fugit voluptatibus odio. Quaerat optio, aperiam minus quidem facilis odit
-                            explicabo accusamus culpa perspiciatis corporis tempore perferendis, quia veniam. Hic.
-                        </p>
-                        <h2>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        </h2>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore laborum
-                            molestiae architecto sequi porro dicta nulla enim! Dignissimos voluptas
-                            at eligendi deleniti alias iste iusto ratione molestiae earum nihil, debitis
-                            fugit voluptatibus odio. Quaerat optio, aperiam minus quidem facilis odit
-                            explicabo accusamus culpa perspiciatis corporis tempore perferendis, quia veniam. Hic.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore laborum
-                            molestiae architecto sequi porro dicta nulla enim! Dignissimos voluptas
-                            at eligendi deleniti alias iste iusto ratione molestiae earum nihil, debitis
-                            fugit voluptatibus odio. Quaerat optio, aperiam minus quidem facilis odit
-                            explicabo accusamus culpa perspiciatis corporis tempore perferendis, quia veniam. Hic.
-                        </p>
-                    </div>
+                    <div className={styles.description} dangerouslySetInnerHTML={{
+                        __html: post.description
+                    }} />
                     
                     {/* Comments */}
                     <div className={styles.comments}>
-                        <Comments />
+                        <Comments postSlug={slug} />
                     </div>
                 </div>
                 <Menu></Menu>

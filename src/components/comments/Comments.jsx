@@ -1,15 +1,25 @@
-import styles from "./comments.module.css";
+"use client";
 
 import Link from "next/link";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
+import useSWR from "swr";
+
+import styles from "./comments.module.css";
+import getComments from "@/lib/api/getComments.js";
 
 /**
  * Comments
  * 
  * @returns 
  */
-export default function Comments() {
-    const status = "authenticated";
+export default function Comments({ postSlug }) {
+    const { status } = useSession();
+    
+    const { data, isLoading } = useSWR(
+        `http://localhost:3005/api/comments?postSlug=${postSlug}`,
+        getComments
+    );
     
     return (
         <div className={styles.container}>
@@ -24,20 +34,27 @@ export default function Comments() {
             )}
             
             <div className={styles.comments}>
-                <div className={styles.comment}>
-                    <div className={styles.user}>
-                        <Image src="/p1.jpeg" alt="" width={50} height={50} className={styles.image} />
-                        <div className={styles.userInfo}>
-                            <span className={styles.username}>John Doe</span>
-                            <span className={styles.date}>2024.04.09</span>
+                {isLoading ? "Loading..." : data.map(comment => {
+                    return (
+                        <div className={styles.comment} key={comment._id}>
+                            <div className={styles.user}>
+                                {comment.user.image && <Image
+                                    src={comment.user.image}
+                                    alt=""
+                                    width={50}
+                                    height={50}
+                                    className={styles.image}
+                                />}
+                                
+                                <div className={styles.userInfo}>
+                                    <span className={styles.username}>{comment.user.name}</span>
+                                    <span className={styles.date}>{comment.createdAt.substring(0, 10)}</span>
+                                </div>
+                            </div>
+                            <p className={styles.description}>{comment.description}</p>
                         </div>
-                    </div>
-                    <p className={styles.description}>
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quod blanditiis
-                        deserunt dolorem aperiam tenetur amet corrupti at magnam! Odio, doloremque
-                        magnam. Soluta alias doloremque quae illum quam consequatur, ullam nam.
-                    </p>
-                </div>
+                    );
+                })}
             </div>
         </div>
     );
