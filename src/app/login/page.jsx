@@ -18,13 +18,14 @@ export default function LoginPage() {
     
     if(status === "loading") {
         return (
-            <div>
+            <div className={styles.loading}>
                 Loading...
             </div>
         );
     }
+    
     if(status === "authenticated") {
-        router.push("/")
+        router.push("/");
     }
     
     return (
