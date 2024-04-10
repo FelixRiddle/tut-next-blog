@@ -12,8 +12,8 @@ import { POSTS_PER_PAGE } from "@/app/api/posts/route";
  * @param {*} param0 
  * @returns 
  */
-const CardList = ({ page }) => {
-    const { posts, count: totalPosts } = getPosts(page);
+const CardList = ({ page, cat }) => {
+    const { posts, count: totalPosts } = getPosts(page, cat);
     
     const hasNext = POSTS_PER_PAGE * (page - 1) > 0;
     const hasPrev = POSTS_PER_PAGE * (page - 1) < POSTS_PER_PAGE - totalPosts;
