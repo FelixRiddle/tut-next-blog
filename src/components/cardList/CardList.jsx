@@ -1,9 +1,13 @@
 import React from "react";
+
 import styles from "./cardList.module.css";
 import Pagination from "../pagination/Pagination";
 import Card from "../card/Card";
+import getPosts from "@/lib/api/getPosts";
 
 const CardList = () => {
+    const data = getPosts();
+    
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>Recent posts</h1>

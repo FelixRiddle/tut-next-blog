@@ -2,48 +2,25 @@ import React from "react";
 import styles from "./categoryList.module.css";
 import Link from "next/link";
 import Image from "next/image";
+import getPosts from "@/lib/api/getPosts";
 
-const CategoryList = () => {
+const CategoryList = async () => {
+    const data = await getPosts();
+    
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>Popular Categories</h1>
             <div className={styles.categories}>
-                {/* Style */}
-                <Link href="/blog?cat=style" className={`${styles.category} ${styles.style}`}>
-                    <Image src="/style.png" alt="" width={32} height={32} className={styles.image} />
-                    Style
-                </Link>
-                
-                {/* Fashion */}
-                {/* In the tutorial 'cat' is not present for the rest */}
-                <Link href="/blog?cat=style" className={`${styles.category} ${styles.fashion}`}>
-                    <Image src="/fashion.png" alt="" width={32} height={32} className={styles.image} />
-                    Fashion
-                </Link>
-                
-                {/* Food */}
-                <Link href="/blog?cat=style" className={`${styles.category} ${styles.food}`}>
-                    <Image src="/food.png" alt="" width={32} height={32} className={styles.image} />
-                    Food
-                </Link>
-                
-                {/* Travel */}
-                <Link href="/blog?cat=style" className={`${styles.category} ${styles.travel}`}>
-                    <Image src="/travel.png" alt="" width={32} height={32} className={styles.image} />
-                    Travel
-                </Link>
-                
-                {/* Culture */}
-                <Link href="/blog?cat=style" className={`${styles.category} ${styles.culture}`}>
-                    <Image src="/culture.png" alt="" width={32} height={32} className={styles.image} />
-                    Culture
-                </Link>
-                
-                {/* Coding */}
-                <Link href="/blog?cat=style" className={`${styles.category} ${styles.coding}`}>
-                    <Image src="/coding.png" alt="" width={32} height={32} className={styles.image} />
-                    Coding
-                </Link>
+                {data?.map((item, index) => {
+                    return (
+                        <Link key={item._id} href="/blog?cat=style" className={`${styles.category} ${styles[item.slug]}`}>
+                            {item.img && 
+                                <Image src={item.img} alt="" width={32} height={32} className={styles.image} />
+                            }
+                            {item.title}
+                        </Link>
+                    )
+                })}
             </div>
         </div>
     )

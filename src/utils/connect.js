@@ -6,11 +6,13 @@ import { PrismaClient } from "@prisma/client";
  * @returns 
  */
 function createPrismaClient() {
+    console.log(`Node env: `, process.env.NODE_ENV);
     if(process.env.NODE_ENV === "production") {
         const prisma = new PrismaClient();
         
         return prisma;
     } else {
+        console.log(`Creating development prisma client`);
         if(!global.prisma) {
             global.prisma = new PrismaClient();
         }
