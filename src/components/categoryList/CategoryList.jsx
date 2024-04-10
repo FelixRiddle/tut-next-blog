@@ -2,10 +2,10 @@ import React from "react";
 import styles from "./categoryList.module.css";
 import Link from "next/link";
 import Image from "next/image";
-import getPosts from "@/lib/api/getPosts";
+import getCategories from "@/lib/api/getCategories";
 
 const CategoryList = async () => {
-    const data = await getPosts();
+    const data = await getCategories();
     
     return (
         <div className={styles.container}>
