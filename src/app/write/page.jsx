@@ -4,7 +4,6 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 
 import styles from "./writePage.module.css";
@@ -20,6 +19,7 @@ const storage = getStorage(FirebaseApplication);
 export default function WritePage() {
     // Validate the user is logged in
     const { data, status } = useSession();
+    const ReactQuill = dynamic(() => import('react-quill'), { ssr: false})
     
     const [file, setFile] = useState(null);
     const [open, setOpen] = useState(false);

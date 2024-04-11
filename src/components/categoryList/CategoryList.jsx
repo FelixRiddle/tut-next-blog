@@ -5,13 +5,14 @@ import Image from "next/image";
 import getCategories from "@/lib/api/getCategories";
 
 const CategoryList = async () => {
-    const data = await getCategories();
+    const categories = await getCategories();
+    console.log(`Categories: `, categories);
     
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>Popular Categories</h1>
             <div className={styles.categories}>
-                {data?.map((item, index) => {
+                {categories.map((item, index) => {
                     return (
                         <Link key={item._id} href="/blog?cat=style" className={`${styles.category} ${styles[item.slug]}`}>
                             {item.img && 

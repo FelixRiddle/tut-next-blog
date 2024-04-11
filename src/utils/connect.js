@@ -24,4 +24,6 @@ function createPrismaClient() {
 // Create and export
 const prisma = createPrismaClient();
 
+console.log(prisma ? `Prisma client exists` : `No prisma client`);
+
 export default prisma;
