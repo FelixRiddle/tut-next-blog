@@ -26,6 +26,15 @@ Unable to test authentication, because google changes 'http' to 'https' internal
 Am I missing something?
 <!-- https://localhost:3005/api/auth/callback/google -->
 
+## Firebase
+
+Firebase is required to upload files.
+
+```bash
+# Private api key
+FIREBASE=VERY_SECRET_KEY
+```
+
 # Run
 
 ```bash

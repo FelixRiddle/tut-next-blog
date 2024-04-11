@@ -43,3 +43,38 @@ export const GET = async(req) => {
     }
 }
 
+
+/**
+ * Create post
+ */
+export const POST = async (req) => {
+    try {
+        const session = await getAuthSession();
+        
+        if(!session) {
+            return new NextResponse({
+                message: "Not authenticated"
+            }, {
+                status: 500,
+            });
+        }
+        
+        const body = await req.json();
+        const post = await prisma.post.create({
+            data: {
+                ...body,
+                userEmail: session.user.email,
+            }
+        });
+        
+        return new NextResponse(JSON.stringify(post), {
+            status: 200,
+        });
+    } catch(err) {
+        console.error(err);
+        return new NextResponse(JSON.stringify(err), {
+            status: 500,
+        });
+    }
+}
+
