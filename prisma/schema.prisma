@@ -45,6 +45,8 @@ model User {
     id            String    @id @default(cuid()) @map("_id")
     name          String?
     email         String   @unique
+    // We can know when it was verified
+    // and to tell if it's not, check for 'undefined' value
     emailVerified DateTime?
     image         String?
     
